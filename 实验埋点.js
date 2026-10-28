@@ -80,7 +80,7 @@
   document.addEventListener('pointerdown',event=>{if(event.target.closest('[data-paint]'))lastSelection={pointer:event.pointerId,start:performance.now()};},true);
   document.addEventListener('pointerup',event=>{if(lastSelection?.pointer!==event.pointerId)return;setTimeout(()=>{track('grid_selection',{grid:'weekly',method:'rectangle',count:document.querySelectorAll('[data-paint][aria-pressed="true"]').length,durationMs:Math.round(performance.now()-lastSelection.start)});lastSelection=null;},0);},true);
   const toasts=document.getElementById('toast');
-  if(toasts)new MutationObserver(()=>{const message=toasts.textContent.trim();if(message)track(/失败|请先|请输入|请选择|重叠|无效|须在|请检查/.test(message)?'validation_error':'feedback',{message:message.slice(0,300)});}).observe(toasts,{childList:true,characterData:true,subtree:true});
+  if(toasts)new MutationObserver(()=>{const message=toasts.textContent.trim();if(message)track(/失败|请先|请输入|请选择|重叠|无效|须在|^请检查/.test(message)?'validation_error':'feedback',{message:message.slice(0,300)});}).observe(toasts,{childList:true,characterData:true,subtree:true});
   let lastError='';
   const captureErrors=()=>{const message=[...document.querySelectorAll('[role="alert"],.error')].map(element=>element.textContent.trim()).filter(Boolean).join(' | ');if(message&&message!==lastError)track('validation_error',{message:message.slice(0,500)});lastError=message;};
   new MutationObserver(captureErrors).observe(document.getElementById('app')||document.body,{childList:true,characterData:true,subtree:true});
