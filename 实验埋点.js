@@ -39,7 +39,9 @@
  }
  function finish(outcome){
   if(!run||run.ended)return;
-  track('task_end',{outcome});run.ended=true;sessionStorage.setItem(runKey,JSON.stringify(run));flush();
+  const submission=window.ExperimentSubmission?.capture();
+  if(submission)track('submission_result',submission);
+  track('task_end',{outcome,verified:submission?.passed,checks:submission?.checks});run.ended=true;sessionStorage.setItem(runKey,JSON.stringify(run));flush();
   document.getElementById('experimentFinish')?.setAttribute('disabled','');
   document.getElementById('experimentHelp')?.setAttribute('disabled','');
  }
