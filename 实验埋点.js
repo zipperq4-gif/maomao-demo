@@ -65,7 +65,7 @@
   track('page_open');
   document.addEventListener('click',event=>{
    const button=event.target.closest('button,a');
-   if(!button||button.closest('.experiment-panel')||button.matches('[data-temporary-key],[data-paint]'))return;
+   if(!button||button.closest('.experiment-panel,.task-panel')||button.matches('[data-temporary-key],[data-paint]'))return;
    track('click',{target:(button.getAttribute('aria-label')||button.textContent||'').trim().slice(0,100),action:(button.getAttribute('onclick')||'').slice(0,160)});
   },true);
   document.addEventListener('change',event=>{
