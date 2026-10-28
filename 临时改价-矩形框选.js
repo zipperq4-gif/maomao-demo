@@ -1,10 +1,12 @@
 'use strict';
 let temporaryGesture=null;
 const temporaryRectangleStyle=document.createElement('style');
-temporaryRectangleStyle.textContent='.temporary-table{touch-action:none;user-select:none;-webkit-user-select:none}.temporary-table td button{touch-action:none}';
+temporaryRectangleStyle.textContent='.temporary-table{touch-action:none;user-select:none;-webkit-user-select:none}.temporary-table td button{touch-action:none}.phone{position:relative}.phone>.toast{position:absolute;left:50%;bottom:95px;width:max-content;max-width:calc(100% - 32px);white-space:normal;overflow-wrap:anywhere;box-sizing:border-box;text-align:center;z-index:40}.temporary-inline-error{font-size:12px;color:#b13f2a;background:#fff0eb;padding:12px;border-radius:10px;margin:12px 0;overflow-wrap:anywhere}.temporary-inline-error:empty{display:none}.temporary-date-caption{display:block;font-size:9px;color:#999;font-style:normal}.temporary-range-note{font-size:11px;color:#888;margin-top:10px}dialog.temporary-dialog{max-height:80dvh;overflow:auto}';
 document.head.append(temporaryRectangleStyle);
+document.querySelector('.phone').append(document.getElementById('toast'));
 const renderTemporaryBeforeRectangle=renderOriginalTemporary;
-renderOriginalTemporary=function(){renderTemporaryBeforeRectangle();installTemporaryRectangle();};
+renderOriginalTemporary=function(){renderTemporaryBeforeRectangle();app.querySelectorAll('.temporary-table thead th').forEach((header,index)=>{if(!index)return;const date=temporaryDateAt(index-1);const caption=document.createElement('small');caption.className='temporary-date-caption';caption.textContent=temporaryHeaderMode==='weekday'?date.slice(5).replace('-','.'):'周'+days[(new Date(date+'T12:00:00').getDay()+6)%7];header.append(caption);});const fields=app.querySelector('.temporary-fields');fields.insertAdjacentHTML('beforeend','<p class="temporary-range-note">保存所选格子的价格时，结束日期会自动延长至最后一个改价日期。</p><p id="temporaryPublishError" class="temporary-inline-error" role="alert"></p>');installTemporaryRectangle();};
+function showTemporaryError(message){const error=document.getElementById('temporaryPublishError');if(!error)return toast(message);error.textContent=message;error.scrollIntoView({block:'nearest',behavior:'smooth'});}
 function installTemporaryRectangle(){
  const grid=app.querySelector('.temporary-table');
  if(!grid)return;
