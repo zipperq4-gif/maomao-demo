@@ -29,4 +29,4 @@ function deleteSpecial(date){plan.holiday=document.getElementById('holiday').val
 function saveHoliday(){plan.holiday=document.getElementById('holiday').value;home();}
 function savePlan(){const date=document.getElementById('effective').value;if(!date)return toast('请选择生效日期');plan.start=date;try{localStorage.setItem(storageKey,JSON.stringify(plan));toast('对比版定价已保存，原版数据未改动');}catch{toast('浏览器未允许保存，请保留当前页面');}}
 home();
-</script><script src="规则定价-交互优化.js"></script><script src="规则定价-多场地.js"></script><script src="规则定价-完整流程.js"></script><script src="规则定价-涂抹.js"></script><script src="规则定价-流程修订.js"></script><script src="排期定价-产品状态.js"></script></body></html>
+</script><script src="规则定价-交互优化.js"></script><script src="规则定价-多场地.js"></script><script src="规则定价-完整流程.js"></script><script src="规则定价-涂抹.js"></script><script src="规则定价-流程修订.js"></script><script src="排期定价-产品状态.js"></script><script src="实验配置.js"></script><script src="实验埋点.js"></script></body></html>
