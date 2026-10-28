@@ -49,6 +49,7 @@
  window.Experiment={track,flush,begin,finish,pending:()=>queue.length};
  const path=decodeURIComponent(location.pathname);
  const isPrototype=path.includes('老版本AB')||path.includes('规则对比版')||path.endsWith('/index.html')||path.endsWith('/maomao-demo/');
+ if(!isPrototype&&run&&!run.ended)finish('exited');
  if(isPrototype&&run&&!run.ended){
   const style=document.createElement('style');
   style.textContent='.experiment-panel{position:fixed;right:8px;top:4px;z-index:30;font:11px/1.5 sans-serif;background:#fff;border:1px solid #ddd;border-radius:8px;padding:5px;box-shadow:0 2px 9px #0001}.experiment-panel summary{cursor:pointer;color:#777}.experiment-panel button,.experiment-panel a{display:inline-block;font:11px sans-serif;padding:7px;margin:3px;background:#eee;color:#333;border:0;border-radius:5px;text-decoration:none}';
@@ -89,6 +90,6 @@
  }
  window.addEventListener('online',()=>{retryAt=0;flush();});
  document.addEventListener('visibilitychange',()=>{if(run&&!run.ended)track('visibility',{state:document.visibilityState});flush();});
- window.addEventListener('pagehide',()=>{if(run&&!run.ended)track('page_leave');flush();});
+ window.addEventListener('pagehide',()=>{if(run&&!run.ended&&isPrototype){track('page_leave');run.exitAutomatic=true;finish('exited');}flush();});
  setInterval(flush,4000);paintStatus();flush();
 })();
